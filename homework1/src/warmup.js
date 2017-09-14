@@ -34,21 +34,44 @@ function powers(base, limit, output) {
   }
 }
 
-function powersGenerator(base, limit, output) {
+function* powersGenerator(base, limit) {
   let number = 1;
-  let end = false;
-  function next() {
-    output({ number, end });
+  while (number <= limit) {
+    yield number;
     number *= base;
-    if (number >= limit) {
-      end = true;
-      number = undefined;
-    }
   }
 }
 
-function interleave() {
+function say(string) {
+  if (string === undefined) {
+    return '';
+  }
+  function sayAgain(word) {
 
+  }
+}
+
+function interleave(...args) {
+  const arr = args[0];
+  const arr1 = [];
+  for (let i = 1; i < args.length; i += 1) {
+    arr1.push(args[i]);
+  }
+  if (arr.length === 0) {
+    return arr1;
+  } else if (arr1.length === 0) {
+    return arr;
+  }
+  const mergedArray = [];
+  for (let i = 0, len = Math.max(arr.length, arr1.length); i < len; i += 1) {
+    if (i < arr.length) {
+      mergedArray.push(arr[i]);
+    }
+    if (i < arr1.length) {
+      mergedArray.push(arr1[i]);
+    }
+  }
+  return mergedArray;
 }
 
 function cylinder(c) {
@@ -64,9 +87,43 @@ function cylinder(c) {
   const widen = (rFactor) => { radius *= rFactor; };
   const stretch = (hFactor) => { height *= hFactor; };
   const toString = () => `Cylinder with radius ${radius} and height ${height}`;
-  return Object.freeze({ radius, height, surfaceArea, volume, widen, stretch, toString });
+  return Object.freeze({
+    get radius() {
+      return radius;
+    },
+    get height() {
+      return height;
+    },
+    surfaceArea,
+    volume,
+    widen,
+    stretch,
+    toString });
 }
 
+const crypto = require('crypto');
+
+function makeCryptoFunctions(key, algorithm) {
+  function encrypt(string) {
+    const cipher = crypto.createCipher(algorithm, key);
+    let encrypted = cipher.update(string, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+  }
+
+  function decrypt(string) {
+    const decipher = crypto.createDecipher(algorithm, key);
+    let decrypted = decipher.update(string, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  }
+
+  return [encrypt, decrypt];
+}
+
+function randomName(o) {
+  const { gender, region } = o;
+}
 
 module.exports = {
   change,
@@ -74,6 +131,9 @@ module.exports = {
   scramble,
   powers,
   powersGenerator,
+  say,
   interleave,
   cylinder,
+  makeCryptoFunctions,
+  randomName,
 };
