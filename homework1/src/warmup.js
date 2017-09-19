@@ -43,12 +43,16 @@ function* powersGenerator(base, limit) {
 }
 
 function say(string) {
-  if (string === undefined) {
+  if (!string) {
     return '';
   }
-  function sayAgain(word) {
-
-  }
+  return function (word) {
+    if (!word) {
+      return string;
+    }
+    const combinedString = string.concat(' '.concat(word));
+    return say(combinedString);
+  };
 }
 
 function interleave(...args) {
@@ -121,8 +125,22 @@ function makeCryptoFunctions(key, algorithm) {
   return [encrypt, decrypt];
 }
 
+const rp = require('request-promise');
+
 function randomName(o) {
   const { gender, region } = o;
+  const options = {
+    uri: 'https://uinames.com/api/',
+    qs: {
+      amount: 1,
+      gender,
+      region,
+    },
+    json: true,
+  };
+
+  return rp(options)
+    .then(({ surname, name }) => `${surname}, ${name}`);
 }
 
 module.exports = {
