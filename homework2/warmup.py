@@ -28,11 +28,12 @@ def say(string=''):
     def sayMore(word=''):
         if not word:
             return string
-        combinedString = string + ' ' + word
-        return say(combinedString)
+        combined_string = string + ' ' + word
+        return say(combined_string)
     return sayMore
 
 def triples(limit):
+    "Finds all pythagorean triples up to the limit"
     result = []
     if limit == 0:
         return result
@@ -48,12 +49,14 @@ def triples(limit):
     return result
 
 def powers(base, limit):
+    "Generates powers of a base up to the limit"
     number = 1
     while number <= limit:
         yield number
         number *= base
 
 def interleave(arr, *argv):
+    "Combines two arrays in alternating pattern"
     arr1 = arr
     arr2 = []
     for arg in argv:
@@ -62,44 +65,55 @@ def interleave(arr, *argv):
         return arr2
     if len(arr2) == 0:
         return arr1
-    mergedArray = []
+    merged_array = []
     length = max(len(arr1), len(arr2))
     for i in range(0, length):
         if i < len(arr1):
-            mergedArray.append(arr1[i])
+            merged_array.append(arr1[i])
         if i < len(arr2):
-            mergedArray.append(arr2[i])
-    return mergedArray
+            merged_array.append(arr2[i])
+    return merged_array
 
 class Cylinder:
+    "A cylinder with a radius and height."
     def __init__(self, radius=1, height=1):
         self.radius = radius
         self.height = height
+
+    def widen(self, width_factor):
+        "Increases radius by a factor"
+        self.radius *= width_factor
+
+    def stretch(self, height_factor):
+        "Increases height by a factor"
+        self.height *= height_factor
+
+    @property
     def volume(self):
         return math.pi * (self.radius ** 2) * self.height
+
+    @property
     def surface_area(self):
-        return (2* math.pi * self.radius * self.height) + (2 * math.pi * (self.radius **2))
-    def widen(self, wFactor):
-        self.radius *= wFactor
-        return self
-    def stretch(self, sFactor):
-        self.height *= sFactor
-        return self
+        return (2 * math.pi * self.radius * self.height) + (2 * math.pi * (self.radius ** 2))
 
 def make_crypto_functions(key, iv):
+    "Returns two functions"
     def encrypt(byte):
+        "Encrypts a string"
         cipher = AES.new(key, AES.MODE_CBC, iv)
         return cipher.encrypt(byte)
 
     def decrypt(byte):
+        "Decrypts a string"
         cipher = AES.new(key, AES.MODE_CBC, iv)
         return cipher.decrypt(byte)
 
     return (encrypt, decrypt)
 
 def random_name(**kwargs):
+    "Fetches random name using uinames API"
     if kwargs['gender'] != 'male' and kwargs['gender'] != 'female':
         raise ValueError('{"error":"Invalid gender"}')
-    apiRequest = requests.get('https://uinames.com/api/?amount=1', params=kwargs)
-    jsonData = json.loads(apiRequest.text)
-    return '{}, {}'.format(jsonData['surname'], jsonData['name'])
+    api_request = requests.get('https://uinames.com/api/?amount=1', params=kwargs)
+    json_data = json.loads(api_request.text)
+    return '{}, {}'.format(json_data['surname'], json_data['name'])
