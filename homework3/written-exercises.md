@@ -13,7 +13,7 @@ There are 296 bytes in between each address. Each memory address is 8 bytes and 
 
 
 # Problem 3
-
+F is a **[**function passing (a pointer to a [function passing (a double and an array of doubles) returning a double] and a double) returning a pointer**]** to a [function passing (a double and an arbitrary number of arguments) returning a double].
 
 # Problem 4
 The b field in the derived class will hide the b field in the base class, not override it. Both fields are still accessible; however, it is not good practice to have fields with the same name. To access the field in the derived class obj_name.b will return that value. To access the b field in the base class obj_name.Base::b will return that value.
