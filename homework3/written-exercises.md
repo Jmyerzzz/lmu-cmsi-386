@@ -29,3 +29,5 @@ In main(), when g() is called the local x variable is set to 5. Then f() is call
 
 
 # 6
+Raw array: void shuffle(int * arr_p, int arr_length)
+Std::array: void shuffle(array<auto, length>)
