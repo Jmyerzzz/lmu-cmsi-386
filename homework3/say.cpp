@@ -6,15 +6,15 @@ using namespace std;
 
 struct Adder {
 private:
-  std::string final_string = "";
+  string final_string = "";
 public:
-  Adder(std::string s = ""): final_string(s) {}
+  Adder(string s = ""): final_string(s) {}
 
-  Adder operator()(std::string value) {
+  Adder operator()(string value) {
     return Adder(final_string + " " +value);
   }
 
-  std::string operator()() {
+  string operator()() {
     if (final_string.length()){
         final_string = final_string.substr(1);
     }
