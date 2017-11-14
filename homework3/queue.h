@@ -29,21 +29,23 @@ public:
 
   Queue() = default;
 
-  Queue(const Queue& s) = delete;
-  Queue& operator=(const Queue& s) = delete;
+  Queue(const Queue& q) = delete;
+  Queue& operator=(const Queue& q) = delete;
 
-  Queue(Queue&& s): size(s.size), head(s.head), tail(s.tail) {
-    s.head = nullptr;
-    s.tail = nullptr;
-    s.size = 0;
+  Queue(Queue&& q): size(q.size), head(q.head), tail(q.tail) {
+    q.head = nullptr;
+    q.tail = nullptr;
+    q.size = 0;
   }
 
-  Queue& operator=(Queue&& s) {
-    if (&s != this) {
-      size = s.size;
-      head = s.head;
-      s.head = nullptr;
-      s.size = 0;
+  Queue& operator=(Queue&& q) {
+    if (&q != this) {
+      size = q.size;
+      head = q.head;
+      tail = q.tail;
+      q.head = nullptr;
+      q.tail = nullptr;
+      q.size = 0;
     }
     return *this;
   }
@@ -77,6 +79,6 @@ Queue<int> oneTwoThree() {
   return z;
 }
 
-int main() {
-  return 0;
+int main(void) {
+
 }
