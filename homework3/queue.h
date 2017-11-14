@@ -76,3 +76,7 @@ Queue<int> oneTwoThree() {
   z.enqueue(3);
   return z;
 }
+
+int main() {
+  return 0;
+}
