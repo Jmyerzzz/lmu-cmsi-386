@@ -12,10 +12,10 @@ void PrintMap(map<KTy, Ty> map){
 }
 
 int main(void){
-    static const char* fileName;
+    string fileName;
     cout << "Enter a file name: " << endl;
     cin >> fileName;
-    map<string, unsigned int> wordsCount;
+    map<string, int> wordsCount;
 
     ifstream fileStream(fileName);
 

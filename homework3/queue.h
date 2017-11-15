@@ -18,6 +18,7 @@ class Queue {
   Node* copy(Node* n) {
     return new Node {n->data, n->next ? copy(n->next) : nullptr};
   }
+  //friend ostream& operator<<(ostream &output, Queue<T> &rhs);
 
 public:
 
@@ -56,18 +57,39 @@ public:
 
   void enqueue(T x) {
     Node* n = new Node {x, nullptr};
-    tail->next = n;
-    tail = n;
-    size++;
+    if (size) {
+      tail->next = n;
+      tail = tail->next;
+      ++size;
+    } else {
+      head = n;
+      tail = head;
+      ++size;
+    }
   }
 
   T dequeue() {
-    Node* nodeToDelete = head;
-    T valueToReturn = head->data;
-    head = head->next;
-    size--;
-    delete nodeToDelete;
-    return valueToReturn;
+    if (size) {
+      Node* nodeToDelete = head;
+      T valueToReturn = head->data;
+      head = head->next;
+      size--;
+      delete nodeToDelete;
+      return valueToReturn;
+    } else {
+      throw underflow_error("The queue is empty.");
+    }
+  }
+
+  friend ostream& operator<<(ostream &output, Queue<T> &rhs) {
+    Node* nodePtr = rhs.head;
+
+    while (nodePtr != nullptr)
+    {
+      output << nodePtr->data << endl;
+      nodePtr = nodePtr->next;
+    }
+    return output;
   }
 };
 
