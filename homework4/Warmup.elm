@@ -2,6 +2,7 @@ module Warmup exposing (..)
 
 import List exposing (..)
 import Basics exposing (..)
+import Regex exposing (..)
 import Date exposing (..)
 import Date.Extra as Date exposing (..)
 
@@ -32,8 +33,9 @@ change amount =
                 (,,,) (a // 25) (b // 10) (c // 5) (d)
 
 
-
--- stripQuotes: String -> String
+stripQuotes : String -> String
+stripQuotes input =
+    replace All (regex "['\"]") (\_ -> "") <| input
 
 
 powers : Int -> Int -> Result String (List Int)
@@ -50,5 +52,16 @@ sumOfCubesOfOdds list =
     List.filter (\a -> a % 2 /= 0) list |> List.map (\a -> a ^ 3) |> List.foldr (+) 0
 
 
+daysBetween : String -> String -> Result String Int
+daysBetween firstString secondString =
+    case Date.fromString firstString of
+        Err msg ->
+            Err "First input string is not a date."
 
--- daysBetween : String -> String -> Result String Int
+        Ok firstDate ->
+            case Date.fromString secondString of
+                Err msg ->
+                    Err "Second input string is not a date."
+
+                Ok secondDate ->
+                    Ok <| Date.diff Day firstDate secondDate
