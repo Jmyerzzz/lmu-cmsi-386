@@ -44,7 +44,7 @@ powers base limit =
         Err "negative base"
     else
         Ok <|
-            List.map (\power -> base ^ power) (List.range 0 <| floor <| logBase (toFloat base) (toFloat limit))
+            List.map (\power -> base ^ power) (List.range 0 <| Basics.floor <| logBase (toFloat base) (toFloat limit))
 
 
 sumOfCubesOfOdds : List Int -> Int
